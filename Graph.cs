@@ -45,8 +45,9 @@ namespace TubesStima2
         }
 
         // Recursive function for BFS
-        public void BFS(String A, String B, ref bool[] visited, ref String[] parent, ref bool found)
+        public void DFS(String A, String B, ref bool[] visited, ref Stack<String> path, ref bool found)
         {
+            path.Push(A);
             visited[vertices.IndexOf(A)] = true;
             
             List<String> adjV = AdjVertices(A);
@@ -58,11 +59,17 @@ namespace TubesStima2
                     {
                         found = true;
                     }
-                    parent[vertices.IndexOf(v)] = A;
-                    BFS(v, B, ref visited, ref parent, ref found);
+                    DFS(v, B, ref visited, ref path, ref found);
+                }
+                if (found)
+                {
+                    break;
                 }
             }
-            
+            if (!found)
+            {
+                path.Pop();
+            }
         }
 
         // Explore Friend Feature with DFS Algorithm
@@ -71,25 +78,21 @@ namespace TubesStima2
             bool found = false;                             //flag for if B has been visited of not
             bool[] visited = new bool[numOfVertices];       //flag for if B has been visited of not
 
-            String[] parent = new String[numOfVertices];    //for backtracking
+            Stack<String> path = new Stack<string>();
 
             // Start Traversing
-            BFS(A, B, ref visited, ref parent, ref found);
+            DFS(A, B, ref visited, ref path, ref found);
 
-            //backtrack to find the path from A to B
-            //result is a list of vertices from A to B, e.g. -> [A, E, G, B]
-            List<String> path;
             if (found)
             {
-                path = Backtrace(A, B, parent);
-            }
-            else
+                return path.Reverse().ToList();
+            } else
             {
-                path = new List<String>();
-                path.Add("-1");
+                List<String> list = new List<String>();
+                list.Add("-1");
+                return list;
             }
-
-            return path;
+            
         }
 
         // Explore Friend Feature with BFS Algorithm
@@ -211,6 +214,7 @@ namespace TubesStima2
                 idx++;
             }
 
+            firstDegree.Sort((a, b) => b.Count - a.Count);
             return firstDegree;
             
         }

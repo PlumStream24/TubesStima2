@@ -12,20 +12,18 @@ namespace TubesStima2
 {
     public partial class Form1 : Form
     {
+        // attributes
         Graph g;
         Microsoft.Msagl.Drawing.Graph graph;
 
+        // init
         public Form1()
         {
             InitializeComponent();
             BFSRadio.Checked = true;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        // get file path
         private void BrowseButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -37,76 +35,112 @@ namespace TubesStima2
             }
         }
 
-
+        // main function
         private void SearchButton_Click(object sender, EventArgs e)
         {
+            // init variables
+            int start, finish;
+            String AccountInput = AccountBox.GetItemText(AccountBox.SelectedItem);
+            String ExploreInput = ExploreBox.GetItemText(ExploreBox.SelectedItem);
             System.Text.RegularExpressions.Regex Input2 = new System.Text.RegularExpressions.Regex(@"[A-Z]");
-
-            //idk this is not working yet
+            
+            // scuffed ordinal dictionary
             Dictionary<int, String> ordinal = new Dictionary<int, String>()
             {
-                { 1, "st" },
-                { 2, "nd" },
-                { 3, "rd" }
+                { 0, "th" }, { 1, "st" }, { 2, "nd" }, { 3, "rd" }, { 4, "th" },
+                { 5, "th" }, { 6, "th" }, { 7, "th" }, { 8, "th" }, { 9, "th" },
+                { 10, "th" }, { 11, "th" }, { 12, "th" }, { 13, "th" }, { 14, "th" },
+                { 15, "th" }, { 16, "th" }, { 17, "th" }, { 18, "th" }, { 19, "th" },
+                { 20, "th" }, { 21, "th" }, { 22, "th" }, { 23, "th" }, { 24, "th" }
             };
 
             //case no account input
-            if (!Input2.IsMatch(AccountBox.GetItemText(AccountBox.SelectedItem)))
+            if (!Input2.IsMatch(AccountInput))
             {
-                ResultBox.Text = "Invalid Input 2.";
+                ResultBox.Text = "Invalid Input 2 . . .";
                 return;
             }
 
             ResultBox.Clear();
 
-            //Explore Friend
-            if ((BFSRadio.Checked || DFSRadio.Checked) && Input2.IsMatch(ExploreBox.GetItemText(ExploreBox.SelectedItem)))
+            //case same input
+            if (AccountInput != ExploreInput)
             {
+                ResultBox.AppendText("Please input a different node . . .");
+            }
+
+            //Explore Friend
+            if ((BFSRadio.Checked || DFSRadio.Checked) && Input2.IsMatch(ExploreInput) && AccountInput != ExploreInput)
+            {
+                // get path from BFS or DFS Algo
                 List<String> pathToExplore;
                 if (BFSRadio.Checked)
                 {
-                    pathToExplore = g.ExploreBFS(AccountBox.GetItemText(AccountBox.SelectedItem), ExploreBox.GetItemText(ExploreBox.SelectedItem));
+                    pathToExplore = g.ExploreBFS(AccountInput, ExploreInput);
                 } else
                 {
-                    pathToExplore = g.ExploreDFS(AccountBox.GetItemText(AccountBox.SelectedItem), ExploreBox.GetItemText(ExploreBox.SelectedItem));
+                    pathToExplore = g.ExploreDFS(AccountInput, ExploreInput);
                 }
 
-                ResultBox.AppendText("Explore Path From " + AccountBox.GetItemText(AccountBox.SelectedItem) + " To " + ExploreBox.GetItemText(ExploreBox.SelectedItem) + "\n");
+                //Bold first line, it's stupid i know
+                start = ResultBox.Text.Length;
+                ResultBox.AppendText("Explore Path From " + AccountInput + " To " + ExploreInput + "\n");
+                finish = ResultBox.Text.Length - start;
+                ResultBox.Select(start, finish);
+                ResultBox.SelectionFont = new Font(ResultBox.Font, FontStyle.Bold);
 
+                //case not found
                 if (pathToExplore[0] == "-1")
                 {
-                    ResultBox.AppendText("Tidak ada jalur koneksi yang tersedia.\n Anda harus memulai koneksi baru itu sendiri.\n");
+                    ResultBox.AppendText("Tidak ada jalur koneksi yang tersedia.\nAnda harus memulai koneksi baru itu sendiri.\n");
                 }
+                //case found
                 else
                 {
+                    //print each node and color it
                     foreach (String path in pathToExplore)
                     {
                         if (path == pathToExplore.Last())
                         {
                             ResultBox.AppendText(path + "\n");
+                            graph.FindNode(path).Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightPink;
                         }
                         else
                         {
                             ResultBox.AppendText(path + " -> ");
+                            graph.FindNode(path).Attr.FillColor = Microsoft.Msagl.Drawing.Color.MistyRose;
                         }
+                        
                     }
-                    ResultBox.AppendText((pathToExplore.Count() - 2) + " Degree\n");
+                    //print degree
+                    ResultBox.AppendText((pathToExplore.Count() - 2) + ordinal[pathToExplore.Count() - 2] + " Degree Connection\n");
                 }
 
                 ResultBox.AppendText("\n");
             }
 
             //Friend Recommendation
-            List<List<String>> firstDegreeFriend = g.FriendRecBFS(AccountBox.GetItemText(AccountBox.SelectedItem));
+            List<List<String>> firstDegreeFriend = g.FriendRecBFS(AccountInput);
 
-            ResultBox.AppendText("Friend Recommendation For " + AccountBox.GetItemText(AccountBox.SelectedItem) + " :\n");
+            //Bold first line, again, it's stupid
+            start = ResultBox.Text.Length;
+            ResultBox.AppendText("Friend Recommendation For " + AccountInput + " :\n");
+            finish = ResultBox.Text.Length - start;
+            ResultBox.Select(start, finish);
+            ResultBox.SelectionFont = new Font(ResultBox.Font, FontStyle.Bold);
+            ResultBox.Select(ResultBox.Text.Length, 0);
+
+            //Print
             foreach (List<String> list in firstDegreeFriend)
             {
                 foreach (String v in list)
                 {
                     if (v == list.First())
                     {
-                        ResultBox.AppendText(v + "\n" + (list.Count() - 2) + " Mutual Friend : ");
+                        ResultBox.SelectionBullet = true;
+                        ResultBox.AppendText("Friend " + v + "\n");
+                        ResultBox.SelectionBullet = false;
+                        ResultBox.AppendText((list.Count() - 1) + " Mutual Friend : ");
                     }
                     else
                     {
@@ -116,12 +150,18 @@ namespace TubesStima2
                 ResultBox.AppendText("\n");
             }
 
-            //ResultBox.Text = "Success";
+            //Color First Node
+            graph.FindNode(AccountInput).Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightCyan;
+
+            //Update Graph
+            gViewer1.Graph = graph;
 
         }
 
+        //Load graph from file and add selection
         private void LoadButton_Click(object sender, EventArgs e)
         {
+            //init attributes
             String filename = FileInput.Text;
             g = new Graph();
             graph = new Microsoft.Msagl.Drawing.Graph("graph");
@@ -155,9 +195,7 @@ namespace TubesStima2
                 graph.AddEdge(subs[0], subs[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
             }
 
-            //show graph
-            gViewer1.Graph = graph;
-
+            //Add selection to boxes
             AccountBox.Items.Clear();
             ExploreBox.Items.Clear();
             foreach (String v in g.vertices)
@@ -165,6 +203,9 @@ namespace TubesStima2
                 AccountBox.Items.Add(v);
                 ExploreBox.Items.Add(v);
             }
+
+            //show graph
+            gViewer1.Graph = graph;
 
         }
     }
