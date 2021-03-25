@@ -12,9 +12,13 @@ namespace TubesStima2
 {
     public partial class Form1 : Form
     {
+        Graph g;
+        Microsoft.Msagl.Drawing.Graph graph;
+
         public Form1()
         {
             InitializeComponent();
+            BFSRadio.Checked = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -33,23 +37,9 @@ namespace TubesStima2
             }
         }
 
-        private void BFSRadio_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DFSRadio_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            //Initialization
-            String filename = FileInput.Text;
-            Graph g = new Graph();
-            Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
-            System.IO.StreamReader file;
             System.Text.RegularExpressions.Regex Input2 = new System.Text.RegularExpressions.Regex(@"[A-Z]");
 
             //idk this is not working yet
@@ -60,50 +50,28 @@ namespace TubesStima2
                 { 3, "rd" }
             };
 
-            //case no input
-            if (filename == "")
-            {
-                ResultBox.Text = "Invalid input.";
-                return;
-            }
-
-            //read file
-            try
-            {
-                file = new System.IO.StreamReader(filename);
-            } catch (System.IO.IOException)
-            {
-                ResultBox.Text = "IO Error.";
-                return;
-            }
-
-            //create graph
-            int numOfEdges = Int32.Parse(file.ReadLine());
-            for (int i = 0; i < numOfEdges; i++)
-            {
-                String line = file.ReadLine();
-                String[] subs = line.Split(' ');
-                g.AddEdge(subs[0], subs[1]);
-                graph.AddEdge(subs[0], subs[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
-            }
-            
-            //show graph
-            gViewer1.Graph = graph;
-
             //case no account input
-            if (!Input2.IsMatch(AccountInput.Text))
+            if (!Input2.IsMatch(AccountBox.GetItemText(AccountBox.SelectedItem)))
             {
                 ResultBox.Text = "Invalid Input 2.";
                 return;
             }
 
-            //Explore Friend
-            if (BFSRadio.Checked && Input2.IsMatch(ExploreInput.Text))
-            {
-                List<String> pathToExplore = g.ExploreBFS(AccountInput.Text, ExploreInput.Text);
-                ResultBox.Clear();
+            ResultBox.Clear();
 
-                ResultBox.AppendText("Explore Path From " + AccountInput.Text + " To " + ExploreInput.Text + "\n");
+            //Explore Friend
+            if ((BFSRadio.Checked || DFSRadio.Checked) && Input2.IsMatch(ExploreBox.GetItemText(ExploreBox.SelectedItem)))
+            {
+                List<String> pathToExplore;
+                if (BFSRadio.Checked)
+                {
+                    pathToExplore = g.ExploreBFS(AccountBox.GetItemText(AccountBox.SelectedItem), ExploreBox.GetItemText(ExploreBox.SelectedItem));
+                } else
+                {
+                    pathToExplore = g.ExploreDFS(AccountBox.GetItemText(AccountBox.SelectedItem), ExploreBox.GetItemText(ExploreBox.SelectedItem));
+                }
+
+                ResultBox.AppendText("Explore Path From " + AccountBox.GetItemText(AccountBox.SelectedItem) + " To " + ExploreBox.GetItemText(ExploreBox.SelectedItem) + "\n");
 
                 if (pathToExplore[0] == "-1")
                 {
@@ -129,9 +97,9 @@ namespace TubesStima2
             }
 
             //Friend Recommendation
-            List<List<String>> firstDegreeFriend = g.FriendRecBFS(AccountInput.Text);
+            List<List<String>> firstDegreeFriend = g.FriendRecBFS(AccountBox.GetItemText(AccountBox.SelectedItem));
 
-            ResultBox.AppendText("Friend Recommendation For " + AccountInput.Text + " :\n");
+            ResultBox.AppendText("Friend Recommendation For " + AccountBox.GetItemText(AccountBox.SelectedItem) + " :\n");
             foreach (List<String> list in firstDegreeFriend)
             {
                 foreach (String v in list)
@@ -152,6 +120,52 @@ namespace TubesStima2
 
         }
 
+        private void LoadButton_Click(object sender, EventArgs e)
+        {
+            String filename = FileInput.Text;
+            g = new Graph();
+            graph = new Microsoft.Msagl.Drawing.Graph("graph");
+            System.IO.StreamReader file;
 
+            //case no input
+            if (filename == "")
+            {
+                ResultBox.Text = "Invalid input.";
+                return;
+            }
+
+            //read file
+            try
+            {
+                file = new System.IO.StreamReader(filename);
+            }
+            catch (System.IO.IOException)
+            {
+                ResultBox.Text = "IO Error.";
+                return;
+            }
+
+            //create graph
+            int numOfEdges = Int32.Parse(file.ReadLine());
+            for (int i = 0; i < numOfEdges; i++)
+            {
+                String line = file.ReadLine();
+                String[] subs = line.Split(' ');
+                g.AddEdge(subs[0], subs[1]);
+                graph.AddEdge(subs[0], subs[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
+            }
+
+            //show graph
+            gViewer1.Graph = graph;
+
+            AccountBox.Items.Clear();
+            ExploreBox.Items.Clear();
+            foreach (String v in g.vertices)
+            {
+                AccountBox.Items.Add(v);
+                ExploreBox.Items.Add(v);
+            }
+
+        }
     }
 }

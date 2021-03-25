@@ -9,8 +9,8 @@ namespace TubesStima2
     class Graph
     {
         // Attributes
-        int numOfVertices;      //number of vertices
-        List<String> vertices;  //list of vertices
+        public int numOfVertices;      //number of vertices
+        public List<String> vertices;  //list of vertices
         List<String[]> edges;   //list of edges
         
         // Constructor
@@ -44,15 +44,59 @@ namespace TubesStima2
 
         }
 
+        // Recursive function for BFS
+        public void BFS(String A, String B, ref bool[] visited, ref String[] parent, ref bool found)
+        {
+            visited[vertices.IndexOf(A)] = true;
+            
+            List<String> adjV = AdjVertices(A);
+            foreach (String v in adjV)
+            {
+                if (!visited[vertices.IndexOf(v)])
+                {
+                    if (v == B)
+                    {
+                        found = true;
+                    }
+                    parent[vertices.IndexOf(v)] = A;
+                    BFS(v, B, ref visited, ref parent, ref found);
+                }
+            }
+            
+        }
+
+        // Explore Friend Feature with DFS Algorithm
+        public List<String> ExploreDFS(String A, String B)
+        {
+            bool found = false;                             //flag for if B has been visited of not
+            bool[] visited = new bool[numOfVertices];       //flag for if B has been visited of not
+
+            String[] parent = new String[numOfVertices];    //for backtracking
+
+            // Start Traversing
+            BFS(A, B, ref visited, ref parent, ref found);
+
+            //backtrack to find the path from A to B
+            //result is a list of vertices from A to B, e.g. -> [A, E, G, B]
+            List<String> path;
+            if (found)
+            {
+                path = Backtrace(A, B, parent);
+            }
+            else
+            {
+                path = new List<String>();
+                path.Add("-1");
+            }
+
+            return path;
+        }
+
         // Explore Friend Feature with BFS Algorithm
         public List<String> ExploreBFS(String A, String B)
         {
             bool found = false;                             //flag for if B has been visited of not
-            bool[] visited = new bool[numOfVertices];       //for marking visited vertices
-            for (int i = 0; i < numOfVertices; i++)
-            {
-                visited[i] = false;
-            }
+            bool[] visited = new bool[numOfVertices];       //flag for if B has been visited of not
 
             String[] parent = new String[numOfVertices];    //for backtracking
             List<String> queue = new List<String>();        //active vertices
@@ -186,6 +230,8 @@ namespace TubesStima2
                     adjA.Add(v[0]);
                 }
             }
+
+            adjA.Sort();
 
             return adjA;
         }

@@ -38,11 +38,12 @@ namespace TubesStima2
             this.BFSRadio = new System.Windows.Forms.RadioButton();
             this.DFSRadio = new System.Windows.Forms.RadioButton();
             this.AccountLabel = new System.Windows.Forms.Label();
-            this.AccountInput = new System.Windows.Forms.MaskedTextBox();
             this.ExploreLabel = new System.Windows.Forms.Label();
-            this.ExploreInput = new System.Windows.Forms.MaskedTextBox();
             this.SearchButton = new System.Windows.Forms.Button();
             this.ResultBox = new System.Windows.Forms.RichTextBox();
+            this.LoadButton = new System.Windows.Forms.Button();
+            this.AccountBox = new System.Windows.Forms.ComboBox();
+            this.ExploreBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // gViewer1
@@ -77,7 +78,7 @@ namespace TubesStima2
             this.gViewer1.SaveButtonVisible = true;
             this.gViewer1.SaveGraphButtonVisible = true;
             this.gViewer1.SaveInVectorFormatEnabled = true;
-            this.gViewer1.Size = new System.Drawing.Size(510, 304);
+            this.gViewer1.Size = new System.Drawing.Size(540, 324);
             this.gViewer1.TabIndex = 0;
             this.gViewer1.TightOffsetForRouting = 0.125D;
             this.gViewer1.ToolBarIsVisible = true;
@@ -89,7 +90,7 @@ namespace TubesStima2
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Location = new System.Drawing.Point(389, 22);
+            this.BrowseButton.Location = new System.Drawing.Point(405, 22);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(75, 23);
             this.BrowseButton.TabIndex = 1;
@@ -103,7 +104,7 @@ namespace TubesStima2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FileInput.Location = new System.Drawing.Point(88, 24);
             this.FileInput.Name = "FileInput";
-            this.FileInput.Size = new System.Drawing.Size(259, 20);
+            this.FileInput.Size = new System.Drawing.Size(289, 22);
             this.FileInput.TabIndex = 2;
             // 
             // FileInputLabel
@@ -111,82 +112,62 @@ namespace TubesStima2
             this.FileInputLabel.AutoSize = true;
             this.FileInputLabel.Location = new System.Drawing.Point(30, 27);
             this.FileInputLabel.Name = "FileInputLabel";
-            this.FileInputLabel.Size = new System.Drawing.Size(56, 13);
+            this.FileInputLabel.Size = new System.Drawing.Size(57, 13);
             this.FileInputLabel.TabIndex = 3;
             this.FileInputLabel.Text = "File Input :";
             // 
             // AlgorithmSelectLabel
             // 
             this.AlgorithmSelectLabel.AutoSize = true;
-            this.AlgorithmSelectLabel.Location = new System.Drawing.Point(30, 60);
+            this.AlgorithmSelectLabel.Location = new System.Drawing.Point(30, 422);
             this.AlgorithmSelectLabel.Name = "AlgorithmSelectLabel";
-            this.AlgorithmSelectLabel.Size = new System.Drawing.Size(56, 13);
+            this.AlgorithmSelectLabel.Size = new System.Drawing.Size(55, 13);
             this.AlgorithmSelectLabel.TabIndex = 4;
-            this.AlgorithmSelectLabel.Text = "Algorithm :";
+            this.AlgorithmSelectLabel.Text = "Algorithm";
             // 
             // BFSRadio
             // 
             this.BFSRadio.AutoSize = true;
-            this.BFSRadio.Location = new System.Drawing.Point(92, 60);
+            this.BFSRadio.Location = new System.Drawing.Point(89, 420);
             this.BFSRadio.Name = "BFSRadio";
-            this.BFSRadio.Size = new System.Drawing.Size(45, 17);
+            this.BFSRadio.Size = new System.Drawing.Size(42, 17);
             this.BFSRadio.TabIndex = 5;
             this.BFSRadio.TabStop = true;
             this.BFSRadio.Text = "BFS";
             this.BFSRadio.UseVisualStyleBackColor = true;
-            this.BFSRadio.CheckedChanged += new System.EventHandler(this.BFSRadio_CheckedChanged);
             // 
             // DFSRadio
             // 
             this.DFSRadio.AutoSize = true;
-            this.DFSRadio.Location = new System.Drawing.Point(143, 60);
+            this.DFSRadio.Location = new System.Drawing.Point(140, 420);
             this.DFSRadio.Name = "DFSRadio";
-            this.DFSRadio.Size = new System.Drawing.Size(46, 17);
+            this.DFSRadio.Size = new System.Drawing.Size(44, 17);
             this.DFSRadio.TabIndex = 6;
             this.DFSRadio.TabStop = true;
             this.DFSRadio.Text = "DFS";
             this.DFSRadio.UseVisualStyleBackColor = true;
-            this.DFSRadio.CheckedChanged += new System.EventHandler(this.DFSRadio_CheckedChanged);
             // 
             // AccountLabel
             // 
             this.AccountLabel.AutoSize = true;
-            this.AccountLabel.Location = new System.Drawing.Point(30, 414);
+            this.AccountLabel.Location = new System.Drawing.Point(30, 449);
             this.AccountLabel.Name = "AccountLabel";
-            this.AccountLabel.Size = new System.Drawing.Size(53, 13);
+            this.AccountLabel.Size = new System.Drawing.Size(46, 13);
             this.AccountLabel.TabIndex = 8;
-            this.AccountLabel.Text = "Account :";
-            // 
-            // AccountInput
-            // 
-            this.AccountInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AccountInput.Location = new System.Drawing.Point(88, 411);
-            this.AccountInput.Name = "AccountInput";
-            this.AccountInput.Size = new System.Drawing.Size(79, 20);
-            this.AccountInput.TabIndex = 7;
+            this.AccountLabel.Text = "Account";
             // 
             // ExploreLabel
             // 
             this.ExploreLabel.AutoSize = true;
-            this.ExploreLabel.Location = new System.Drawing.Point(30, 440);
+            this.ExploreLabel.Location = new System.Drawing.Point(30, 475);
             this.ExploreLabel.Name = "ExploreLabel";
-            this.ExploreLabel.Size = new System.Drawing.Size(48, 13);
+            this.ExploreLabel.Size = new System.Drawing.Size(43, 13);
             this.ExploreLabel.TabIndex = 10;
-            this.ExploreLabel.Text = "Explore :";
-            // 
-            // ExploreInput
-            // 
-            this.ExploreInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExploreInput.Location = new System.Drawing.Point(88, 437);
-            this.ExploreInput.Name = "ExploreInput";
-            this.ExploreInput.Size = new System.Drawing.Size(79, 20);
-            this.ExploreInput.TabIndex = 9;
+            this.ExploreLabel.Text = "Explore";
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(33, 472);
+            this.SearchButton.Location = new System.Drawing.Point(33, 498);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(75, 23);
             this.SearchButton.TabIndex = 11;
@@ -198,26 +179,53 @@ namespace TubesStima2
             // 
             this.ResultBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ResultBox.Location = new System.Drawing.Point(12, 501);
+            this.ResultBox.Location = new System.Drawing.Point(12, 527);
             this.ResultBox.Name = "ResultBox";
             this.ResultBox.ReadOnly = true;
             this.ResultBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.ResultBox.Size = new System.Drawing.Size(510, 69);
+            this.ResultBox.Size = new System.Drawing.Size(540, 139);
             this.ResultBox.TabIndex = 12;
             this.ResultBox.Text = "";
+            // 
+            // LoadButton
+            // 
+            this.LoadButton.Location = new System.Drawing.Point(33, 52);
+            this.LoadButton.Name = "LoadButton";
+            this.LoadButton.Size = new System.Drawing.Size(75, 23);
+            this.LoadButton.TabIndex = 13;
+            this.LoadButton.Text = "Load";
+            this.LoadButton.UseVisualStyleBackColor = true;
+            this.LoadButton.Click += new System.EventHandler(this.LoadButton_Click);
+            // 
+            // AccountBox
+            // 
+            this.AccountBox.FormattingEnabled = true;
+            this.AccountBox.Location = new System.Drawing.Point(89, 446);
+            this.AccountBox.Name = "AccountBox";
+            this.AccountBox.Size = new System.Drawing.Size(121, 21);
+            this.AccountBox.TabIndex = 14;
+            // 
+            // ExploreBox
+            // 
+            this.ExploreBox.FormattingEnabled = true;
+            this.ExploreBox.Location = new System.Drawing.Point(89, 472);
+            this.ExploreBox.Name = "ExploreBox";
+            this.ExploreBox.Size = new System.Drawing.Size(121, 21);
+            this.ExploreBox.TabIndex = 15;
             // 
             // Form1
             // 
             this.AcceptButton = this.SearchButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 582);
+            this.ClientSize = new System.Drawing.Size(564, 678);
+            this.Controls.Add(this.ExploreBox);
+            this.Controls.Add(this.AccountBox);
+            this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.ResultBox);
             this.Controls.Add(this.SearchButton);
             this.Controls.Add(this.ExploreLabel);
-            this.Controls.Add(this.ExploreInput);
             this.Controls.Add(this.AccountLabel);
-            this.Controls.Add(this.AccountInput);
             this.Controls.Add(this.DFSRadio);
             this.Controls.Add(this.BFSRadio);
             this.Controls.Add(this.AlgorithmSelectLabel);
@@ -225,6 +233,7 @@ namespace TubesStima2
             this.Controls.Add(this.FileInput);
             this.Controls.Add(this.BrowseButton);
             this.Controls.Add(this.gViewer1);
+            this.Font = new System.Drawing.Font("Yu Gothic UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -243,11 +252,12 @@ namespace TubesStima2
         private System.Windows.Forms.RadioButton BFSRadio;
         private System.Windows.Forms.RadioButton DFSRadio;
         private System.Windows.Forms.Label AccountLabel;
-        private System.Windows.Forms.MaskedTextBox AccountInput;
         private System.Windows.Forms.Label ExploreLabel;
-        private System.Windows.Forms.MaskedTextBox ExploreInput;
         private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.RichTextBox ResultBox;
+        private System.Windows.Forms.Button LoadButton;
+        private System.Windows.Forms.ComboBox AccountBox;
+        private System.Windows.Forms.ComboBox ExploreBox;
     }
 }
 
