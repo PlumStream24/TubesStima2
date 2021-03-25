@@ -48,8 +48,7 @@ namespace TubesStima2
             // 
             // gViewer1
             // 
-            this.gViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.gViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gViewer1.ArrowheadLength = 10D;
             this.gViewer1.AsyncLayout = false;
@@ -183,7 +182,7 @@ namespace TubesStima2
             this.ResultBox.Name = "ResultBox";
             this.ResultBox.ReadOnly = true;
             this.ResultBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.ResultBox.Size = new System.Drawing.Size(540, 139);
+            this.ResultBox.Size = new System.Drawing.Size(540, 189);
             this.ResultBox.TabIndex = 12;
             this.ResultBox.Text = "";
             // 
@@ -199,6 +198,8 @@ namespace TubesStima2
             // 
             // AccountBox
             // 
+            this.AccountBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.AccountBox.FormattingEnabled = true;
             this.AccountBox.Location = new System.Drawing.Point(89, 446);
             this.AccountBox.Name = "AccountBox";
@@ -207,6 +208,8 @@ namespace TubesStima2
             // 
             // ExploreBox
             // 
+            this.ExploreBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ExploreBox.FormattingEnabled = true;
             this.ExploreBox.Location = new System.Drawing.Point(89, 472);
             this.ExploreBox.Name = "ExploreBox";
@@ -218,7 +221,7 @@ namespace TubesStima2
             this.AcceptButton = this.SearchButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 678);
+            this.ClientSize = new System.Drawing.Size(564, 728);
             this.Controls.Add(this.ExploreBox);
             this.Controls.Add(this.AccountBox);
             this.Controls.Add(this.LoadButton);

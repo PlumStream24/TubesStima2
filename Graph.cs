@@ -44,7 +44,7 @@ namespace TubesStima2
 
         }
 
-        // Recursive function for BFS
+        // Recursive function for DFS
         public void DFS(String A, String B, ref bool[] visited, ref Stack<String> path, ref bool found)
         {
             path.Push(A);
@@ -53,6 +53,10 @@ namespace TubesStima2
             List<String> adjV = AdjVertices(A);
             foreach (String v in adjV)
             {
+                if (found)
+                {
+                    break;
+                }
                 if (!visited[vertices.IndexOf(v)])
                 {
                     if (v == B)
@@ -60,10 +64,6 @@ namespace TubesStima2
                         found = true;
                     }
                     DFS(v, B, ref visited, ref path, ref found);
-                }
-                if (found)
-                {
-                    break;
                 }
             }
             if (!found)

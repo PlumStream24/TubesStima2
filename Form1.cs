@@ -54,6 +54,12 @@ namespace TubesStima2
                 { 20, "th" }, { 21, "th" }, { 22, "th" }, { 23, "th" }, { 24, "th" }
             };
 
+            //Reset Graph Color
+            foreach (String v in g.vertices)
+            {
+                graph.FindNode(v).Attr.FillColor = Microsoft.Msagl.Drawing.Color.White;
+            }
+
             //case no account input
             if (!Input2.IsMatch(AccountInput))
             {
@@ -64,9 +70,9 @@ namespace TubesStima2
             ResultBox.Clear();
 
             //case same input
-            if (AccountInput != ExploreInput)
+            if (AccountInput == ExploreInput)
             {
-                ResultBox.AppendText("Please input a different node . . .");
+                ResultBox.AppendText("Please input a different node . . .\n");
             }
 
             //Explore Friend
@@ -84,7 +90,7 @@ namespace TubesStima2
 
                 //Bold first line, it's stupid i know
                 start = ResultBox.Text.Length;
-                ResultBox.AppendText("Explore Path From " + AccountInput + " To " + ExploreInput + "\n");
+                ResultBox.AppendText("Explore Path From " + AccountInput + " To " + ExploreInput + (BFSRadio.Checked ? " (BFS) " : " (DFS) ") + "\n");
                 finish = ResultBox.Text.Length - start;
                 ResultBox.Select(start, finish);
                 ResultBox.SelectionFont = new Font(ResultBox.Font, FontStyle.Bold);
@@ -156,6 +162,7 @@ namespace TubesStima2
             //Update Graph
             gViewer1.Graph = graph;
 
+
         }
 
         //Load graph from file and add selection
@@ -166,9 +173,12 @@ namespace TubesStima2
             g = new Graph();
             graph = new Microsoft.Msagl.Drawing.Graph("graph");
             System.IO.StreamReader file;
+            System.Text.RegularExpressions.Regex filenameRegex = new System.Text.RegularExpressions.Regex(@".*\.txt");
+
+            ResultBox.Clear();
 
             //case no input
-            if (filename == "")
+            if (filename == "" || !filenameRegex.IsMatch(filename))
             {
                 ResultBox.Text = "Invalid input.";
                 return;
