@@ -200,6 +200,7 @@ namespace TubesStima2
             // 
             this.AccountBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.AccountBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AccountBox.FormattingEnabled = true;
             this.AccountBox.Location = new System.Drawing.Point(89, 446);
             this.AccountBox.Name = "AccountBox";
@@ -210,6 +211,7 @@ namespace TubesStima2
             // 
             this.ExploreBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExploreBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ExploreBox.FormattingEnabled = true;
             this.ExploreBox.Location = new System.Drawing.Point(89, 472);
             this.ExploreBox.Name = "ExploreBox";

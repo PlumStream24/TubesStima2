@@ -33,6 +33,8 @@ namespace TubesStima2
                 String filename = openFileDialog1.FileName;
                 FileInput.Text = filename;
             }
+            AccountBox.Items.Clear();
+            ExploreBox.Items.Clear();
         }
 
         // main function
